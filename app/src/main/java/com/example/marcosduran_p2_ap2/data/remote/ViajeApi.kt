@@ -26,4 +26,6 @@ interface ViajeApi {
     suspend fun deleteViaje(@Path("id") id: Int?): Response<Unit>
 
 }
+//nota para esclarecer que el dia que se preparo y se indico lo que debe tenerse antes del parcial no me encontraba presente, por lo cual estos archivos son creados ahora.
+
 
