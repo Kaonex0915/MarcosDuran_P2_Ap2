@@ -12,6 +12,6 @@ data class ViajeUiState(
     val errorMessage: String? = "",
     val isLoading: Boolean = false,
     val successMessage: String? = null,
-    val deposito: ViajeDto = ViajeDto(),
-    val depositos: List<ViajeDto> = emptyList()
+    val viaje: ViajeDto = ViajeDto(),
+    val viajes: List<ViajeDto> = emptyList()
 )

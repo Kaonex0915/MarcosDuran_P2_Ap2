@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class ViajeRepository @Inject constructor(
-    private val depositoApi: ViajeApi
+    private val viajeApi: ViajeApi
 ) {
     fun getViaje(): Flow<Resource<List<ViajeDto>>> = flow {
         try {
@@ -27,11 +27,11 @@ class ViajeRepository @Inject constructor(
         }
     }
 
-    fun getDepositoById(depositoId: Int): Flow<Resource<ViajeDto>> = flow {
+    fun getViajeById(viajeId: Int): Flow<Resource<ViajeDto>> = flow {
         try {
             emit(Resource.Loading())
 
-            val response = ViajeApi.getViajeById(depositoId)
+            val response = ViajeApi.getViajeById(viajeId)
 
             emit(Resource.Success(response.body()!!))
 
