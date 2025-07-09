@@ -11,11 +11,11 @@ import retrofit2.http.Path
 interface ViajeApi {
     @GET("api/Viajes")
     @Headers("X-API-Key: test")
-    suspend fun getViajes():List<ViajeDto>
+    suspend fun getViaje():List<ViajeDto>
 
     @PUT("api/Viajes/{id}")
     @Headers("X-API-Key: test")
-    suspend fun getViajesById(@Path("id") id: Int): Response<ViajeDto>
+    suspend fun getViajeById(@Path("id") id: Int): Response<ViajeDto>
 
     @POST("api/Viajes")
     @Headers("X-API-Key: test")
