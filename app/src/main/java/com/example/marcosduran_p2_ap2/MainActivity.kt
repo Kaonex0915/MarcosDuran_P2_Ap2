@@ -5,8 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.rememberNavController
-import com.example.marcosduran_p2_ap2.presentation.navigation.ViajeNavHost
+import com.example.marcosduran_p2_ap2.presentation.navigation.ContributorNavHost
+import com.example.marcosduran_p2_ap2.ui.theme.MarcosDuran_P2_Ap2Theme
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -14,11 +16,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ViajeApiTheme {
+            MarcosDuran_P2_Ap2Theme {
                 val navHost = rememberNavController()
-                ViajeNavHost(navHost)
+                ContributorNavHost(navHost)
             }
         }
     }
-
 }

@@ -1,6 +1,6 @@
 package com.example.marcosduran_p2_ap2.di
 
-import ViajeApi
+import com.example.marcosduran_p2_ap2.data.remote.ContributorsApi
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -15,7 +15,7 @@ import javax.inject.Singleton
 @Module
 object ApiModule {
 
-    const val BASE_URL = "https://cswrk042-5108.use2.devtunnels.ms/swagger/index.html"
+    const val BASE_URL = "https://api.github.com/"
 
     @Provides
     @Singleton
@@ -26,11 +26,12 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun provideViajeApi(moshi: Moshi): ViajeApi {
+    fun provideContributorsApi(moshi: Moshi): ContributorsApi {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
-            .create(ViajeApi::class.java)
+            .create(ContributorsApi::class.java)
     }
+
 }
