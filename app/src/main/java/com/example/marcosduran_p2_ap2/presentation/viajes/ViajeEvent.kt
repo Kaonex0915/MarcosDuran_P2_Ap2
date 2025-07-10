@@ -6,7 +6,7 @@ sealed interface ViajeEvent {
     data class ViajeChange(val viajeId: Int): ViajeEvent
     data class FechaChange(val fecha: String): ViajeEvent
     data class MillaChange(val millas: Int): ViajeEvent
-    data class TasaDolar(val tasaDolar: Double): ViajeEvent
+    data class TasaDolarChange(val tasaDolar: Double): ViajeEvent
     data class MontoChange(val monto: Double): ViajeEvent
     data class ObsercacionesChange(val observaciones: String): ViajeEvent
     data object Save: ViajeEvent

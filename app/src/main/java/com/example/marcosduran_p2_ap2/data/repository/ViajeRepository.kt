@@ -1,22 +1,23 @@
 package com.example.marcosduran_p2_ap2.data.repository
 
 import ViajeApi
-import android.adservices.adid.AdId
-import android.net.http.HttpException
+import android.os.ext.SdkExtensions
+import androidx.annotation.RequiresExtension
 import com.example.marcosduran_p2_ap2.data.remote.Resource
 import com.example.marcosduran_p2_ap2.data.remote.dto.ViajeDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
+import retrofit2.HttpException
 
 class ViajeRepository @Inject constructor(
     private val viajeApi: ViajeApi
 ) {
-    fun getViaje(): Flow<Resource<List<ViajeDto>>> = flow {
+    fun getviaje(): Flow<Resource<List<ViajeDto>>> = flow {
         try {
             emit(Resource.Loading())
 
-            val viajes = ViajeApi.getViaje()
+            val viajes = viajeApi.getViaje()
 
             emit(Resource.Success(viajes   ))
 
@@ -27,13 +28,13 @@ class ViajeRepository @Inject constructor(
         }
     }
 
-    fun getViajeById(viajeId: Int): Flow<Resource<ViajeDto>> = flow {
+    fun getviajeById(viajeId: Int): Flow<Resource<ViajeDto>> = flow {
         try {
             emit(Resource.Loading())
 
-            val response = ViajeApi.getViajeById(viajeId)
+            val viajes = viajeApi.getViajeById(viajeId)
 
-            emit(Resource.Success(response.body()!!))
+            emit(Resource.Success(viajes))
 
         } catch (e: HttpException) {
             emit(Resource.Error(e.message ?: "Error al conectarse con la API"))
@@ -42,11 +43,11 @@ class ViajeRepository @Inject constructor(
         }
     }
 
-    fun postViaje(viajeDto: ViajeDto): Flow<Resource<ViajeDto>> = flow{
+    fun postviaje(viajeDto: ViajeDto): Flow<Resource<ViajeDto>> = flow{
         try {
             emit(Resource.Loading())
 
-            ViajeApi.postViaje(viajeDto)
+            viajeApi.postViaje(viajeDto)
             emit(Resource.Success(viajeDto))
 
         } catch (e: HttpException) {
@@ -57,14 +58,15 @@ class ViajeRepository @Inject constructor(
         }
     }
 
-    fun deleteViaje(viajeId: AdId): Flow<Resource<ViajeDto>> = flow{
+    @RequiresExtension(extension = SdkExtensions.AD_SERVICES, version = 4)
+    fun deleteviaje(viajeId: Int?): Flow<Resource<ViajeDto>> = flow{
         try {
             emit(Resource.Loading())
 
-            ViajeApi.deleteViaje(viajeId)
+            viajeApi.deleteViaje(viajeId)
             emit(Resource.Success(ViajeDto()))
 
-        } catch (e: HttpException) {
+        } catch (e: retrofit2.HttpException) {
             emit(Resource.Error(e.message ?: "Error al conectarse con la API"))
         }
         catch (e: Exception) {

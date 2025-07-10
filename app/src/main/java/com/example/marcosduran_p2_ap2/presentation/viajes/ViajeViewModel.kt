@@ -1,7 +1,9 @@
 package com.example.marcosduran_p2_ap2.presentation.viajes
 
 import android.os.Build
+import android.os.ext.SdkExtensions
 import androidx.annotation.RequiresApi
+import androidx.annotation.RequiresExtension
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.marcosduran_p2_ap2.data.remote.Resource
@@ -26,7 +28,7 @@ class ViajeViewModel @Inject constructor(
     private fun getViaje() {
         viewModelScope.launch {
             try {
-                viajeRepository.getViaje().collect { result ->
+                viajeRepository.getviaje().collect { result ->
                     when (result) {
                         is Resource.Loading -> {
                             _state.update { it.copy(isLoading = true, errorMessage = null) }
@@ -66,7 +68,7 @@ class ViajeViewModel @Inject constructor(
     fun postViaje() {
         viewModelScope.launch {
             try {
-                viajeRepository.postViaje(state.value.viaje).collectLatest { result ->
+                viajeRepository.postviaje(state.value.viaje).collectLatest { result ->
                     when(result){
                         is Resource.Loading -> {
                             _state.update { it.copy(isLoading = true) }
@@ -102,31 +104,30 @@ class ViajeViewModel @Inject constructor(
         }
     }
 
-    fun deleteViaje(viajeId: Int?){
+    @RequiresExtension(extension = SdkExtensions.AD_SERVICES, version = 4)
+    fun deleteViaje(){
         viewModelScope.launch {
-            viajeId?.let { id ->
-                viajeRepository.deleteViaje(id).collectLatest { result ->
-                    when(result) {
-                        is Resource.Loading -> {
-                            _state.update { it.copy(isLoading = true) }
-                        }
+            viajeRepository.deleteviaje(_state.value.viaje.idViaje).collectLatest { result ->
+                when(result) {
+                    is Resource.Loading -> {
+                        _state.update { it.copy(isLoading = true) }
+                    }
 
-                        is Resource.Success -> {
-                            _state.update {
-                                it.copy(
-                                    successMessage = "Eliminado correctamente",
-                                    isLoading = false
-                                )
-                            }
+                    is Resource.Success -> {
+                        _state.update {
+                            it.copy(
+                                successMessage = "Eliminado correctamente",
+                                isLoading = false
+                            )
                         }
+                    }
 
-                        is Resource.Error -> {
-                            _state.update {
-                                it.copy(
-                                    errorMessage = "Ocurrió un error: ${result.message}",
-                                    isLoading = false
-                                )
-                            }
+                    is Resource.Error -> {
+                        _state.update {
+                            it.copy(
+                                errorMessage = "Ocurrio un error, intentelo de nuevo",
+                                isLoading = false
+                            )
                         }
                     }
                 }
@@ -134,9 +135,9 @@ class ViajeViewModel @Inject constructor(
         }
     }
 
-    fun getViajeById(viajeId: Int?) {
+    fun getViajeById(viajeId: Int) {
         viewModelScope.launch {
-            viajeRepository.getViajeById(viajeId).collectLatest { result ->
+            viajeRepository.getviajeById(viajeId).collectLatest { result ->
                 when (result) {
                     is Resource.Loading -> {
                         _state.update { it.copy(isLoading = true) }
@@ -204,6 +205,14 @@ class ViajeViewModel @Inject constructor(
                 _state.update {
                     it.copy(
                         viaje = it.idViaje.copy(monto = event.monto)
+                    )
+                }
+            }
+
+            is ViajeEvent.TasaDolarChange -> {
+                _state.update {
+                    it.copy(
+                        viaje = it.idViaje.copy(tasaDolar = event.tasaDolar)
                     )
                 }
             }

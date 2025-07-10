@@ -1,5 +1,5 @@
+import android.adservices.adid.AdId
 import com.example.marcosduran_p2_ap2.data.remote.dto.ViajeDto
-import okhttp3.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -15,7 +15,7 @@ interface ViajeApi {
 
     @PUT("api/Viajes/{id}")
     @Headers("X-API-Key: test")
-    suspend fun getViajeById(@Path("id") id: Int): Response<ViajeDto>
+    suspend fun getViajeById(@Path("id") id: Int): ViajeDto
 
     @POST("api/Viajes")
     @Headers("X-API-Key: test")
@@ -23,7 +23,7 @@ interface ViajeApi {
 
     @DELETE("api/Viajes/{id}")
     @Headers("X-API-Key: test")
-    suspend fun deleteViaje(@Path("id") id: Int?): Response<Unit>
+    suspend fun deleteViaje(@Path("id") id: AdId): Unit
 
 }
 //nota para esclarecer que el dia que se preparo y se indico lo que debe tenerse antes del parcial no me encontraba presente, por lo cual estos archivos son creados ahora.
