@@ -218,20 +218,12 @@ class ViajeViewModel @Inject constructor(
             }
 
             ViajeEvent().Save -> {
-                if (_state.value.viaje.fecha == null) {
-                    _state.update {
-                        it.copy(
-                            viaje = it.viaje.copy(fecha = getCurrentDateISO())
-                        )
-                    }
-                }
                 postViaje()
             }
 
             ViajeEvent().New -> {
                 _state.update {
                     it.copy(
-                        viaje = ViajeDto(fecha = getCurrentDateISO()),
                         successMessage = null,
                         errorMessage = "",
                         isLoading = false
